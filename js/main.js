@@ -39,20 +39,7 @@ var create = function(){
 
 // update game state each frame
 var update = function(){
-
-  if(Nakama.keyboard.isDown(Phaser.Keyboard.UP)){
-    if (Nakama.player.position.y - 10 >= 0) Nakama.player.position.y -= 10;
-  }
-  else if(Nakama.keyboard.isDown(Phaser.Keyboard.DOWN)){
-    if (Nakama.player.position.y + 10 <= 889) Nakama.player.position.y += 10;
-  }
-  else if(Nakama.keyboard.isDown(Phaser.Keyboard.LEFT)){
-    if (Nakama.player.position.x - 10 >= 0) Nakama.player.position.x -= 10;
-  }
-  else if(Nakama.keyboard.isDown(Phaser.Keyboard.RIGHT)){
-    if (Nakama.player.position.x + 10 <= 569) Nakama.player.position.x += 10;
-  }
-  else if(Nakama.keyboard.isDown(Phaser.Keyboard.UP) && Nakama.keyboard.isDown(Phaser.Keyboard.LEFT)){
+  if(Nakama.keyboard.isDown(Phaser.Keyboard.UP) && Nakama.keyboard.isDown(Phaser.Keyboard.LEFT)){
     if (Nakama.player.position.y - 10 >= 0) Nakama.player.position.y -= 10;
     if (Nakama.player.position.x - 10 >= 0) Nakama.player.position.x -= 10;
   }
@@ -66,6 +53,18 @@ var update = function(){
   }
   else if(Nakama.keyboard.isDown(Phaser.Keyboard.DOWN) && Nakama.keyboard.isDown(Phaser.Keyboard.RIGHT)){
     if (Nakama.player.position.y + 10 <= 889) Nakama.player.position.y += 10;
+    if (Nakama.player.position.x + 10 <= 569) Nakama.player.position.x += 10;
+  }
+  else if(Nakama.keyboard.isDown(Phaser.Keyboard.UP)){
+    if (Nakama.player.position.y - 10 >= 0) Nakama.player.position.y -= 10;
+  }
+  else if(Nakama.keyboard.isDown(Phaser.Keyboard.DOWN)){
+    if (Nakama.player.position.y + 10 <= 889) Nakama.player.position.y += 10;
+  }
+  else if(Nakama.keyboard.isDown(Phaser.Keyboard.LEFT)){
+    if (Nakama.player.position.x - 10 >= 0) Nakama.player.position.x -= 10;
+  }
+  else if(Nakama.keyboard.isDown(Phaser.Keyboard.RIGHT)){
     if (Nakama.player.position.x + 10 <= 569) Nakama.player.position.x += 10;
   }
 }
