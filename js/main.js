@@ -52,8 +52,7 @@ var update = function(){
   else if(Nakama.keyboard.isDown(Phaser.Keyboard.RIGHT)){
     if (Nakama.player.position.x + 10 <= 569) Nakama.player.position.x += 10;
   }
-
-  if(Nakama.keyboard.isDown(Phaser.Keyboard.UP) && Nakama.keyboard.isDown(Phaser.Keyboard.LEFT)){
+  else if(Nakama.keyboard.isDown(Phaser.Keyboard.UP) && Nakama.keyboard.isDown(Phaser.Keyboard.LEFT)){
     if (Nakama.player.position.y - 10 >= 0) Nakama.player.position.y -= 10;
     if (Nakama.player.position.x - 10 >= 0) Nakama.player.position.x -= 10;
   }
