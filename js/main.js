@@ -7,13 +7,29 @@ Nakama.configs = {
   MAX_WIDTH   : 640,
   MAX_HEIGHT  : 960,
   PLAYER1_POS : {
-    x : 200,
-    y : 200
+    x : 400,
+    y : 900
   },
   PLAYER2_POS : {
-    x : 400,
+    x : 200,
+    y : 900
+  },
+  ENEMY1_POS : {
+    x : 0,
+    y : 0
+  },
+  ENEMY2_POS : {
+    x : 560,
+    y : 100
+  },
+  ENEMY3_POS : {
+    x : 250,
     y : 200
-  }
+  },
+  ENEMY4_POS : {
+    x : 350,
+    y : 300
+  },
 };
 
 window.onload = function(){
@@ -76,13 +92,34 @@ var create = function(){
       }
     )
   )
+
+  Nakama.enemy = [];
+  Nakama.enemy.push(
+    new EnemyController(
+      Nakama.configs.ENEMY1_POS.x,
+      Nakama.configs.ENEMY1_POS.y,
+      "EnemyType1.png"
+    )
+  )
+  Nakama.enemy.push(
+    new EnemyController(
+      Nakama.configs.ENEMY2_POS.x,
+      Nakama.configs.ENEMY2_POS.y,
+      "EnemyType2.png"
+    )
+  )
 }
 
 
 // update game state each frame
 var update = function(){
+
   Nakama.players.forEach(function (ship){
       ship.update();
+  });
+
+  Nakama.enemy.forEach(function (enemy){
+      enemy.update();
   });
 }
 
