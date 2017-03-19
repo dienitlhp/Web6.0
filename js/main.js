@@ -15,20 +15,12 @@ Nakama.configs = {
     y : 900
   },
   ENEMY1_POS : {
-    x : 0,
-    y : 0
-  },
-  ENEMY2_POS : {
-    x : 560,
-    y : 100
-  },
-  ENEMY3_POS : {
-    x : 250,
+    x : 200,
     y : 200
   },
-  ENEMY4_POS : {
-    x : 350,
-    y : 300
+  ENEMY2_POS : {
+    x : 50,
+    y : 50
   },
 };
 
@@ -63,6 +55,9 @@ var create = function(){
   Nakama.game.physics.startSystem(Phaser.Physics.ARCADE);
   Nakama.keyboard = Nakama.game.input.keyboard;
   Nakama.game.add.sprite(0, 0, 'background');
+  Nakama.bulletGroup = Nakama.game.add.physicsGroup();
+  Nakama.playerGroup = Nakama.game.add.physicsGroup();
+  Nakama.enemyGroup = Nakama.game.add.physicsGroup();
   Nakama.players = [];
   Nakama.players.push(
     new ShipController(
@@ -74,7 +69,10 @@ var create = function(){
         down : Phaser.Keyboard.DOWN,
         left : Phaser.Keyboard.LEFT,
         right : Phaser.Keyboard.RIGHT,
-        fire : Phaser.Keyboard.SPACEBAR
+        fire : Phaser.Keyboard.NUMPAD_0,
+        ult : Phaser.Keyboard.NUMPAD_1,
+        cooldown : 0.2,
+        cooldownHomingBullet : 1
       }
     )
   )
@@ -82,13 +80,16 @@ var create = function(){
     new ShipController(
       Nakama.configs.PLAYER2_POS.x,
       Nakama.configs.PLAYER2_POS.y,
-      "Spaceship1-Partner.png",
+      "Spaceship2-Partner.png",
       {
         up : Phaser.Keyboard.W,
         down : Phaser.Keyboard.S,
         left : Phaser.Keyboard.A,
         right : Phaser.Keyboard.D,
-        fire : Phaser.Keyboard.L
+        fire : Phaser.Keyboard.SPACEBAR,
+        ult : Phaser.Keyboard.R,
+        cooldown : 0.2,
+        cooldownHomingBullet : 1
       }
     )
   )
@@ -98,14 +99,20 @@ var create = function(){
     new EnemyController(
       Nakama.configs.ENEMY1_POS.x,
       Nakama.configs.ENEMY1_POS.y,
-      "EnemyType1.png"
+      "EnemyType1.png",
+      {
+        health : 50
+      }
     )
   )
   Nakama.enemy.push(
     new EnemyController(
       Nakama.configs.ENEMY2_POS.x,
       Nakama.configs.ENEMY2_POS.y,
-      "EnemyType2.png"
+      "EnemyType2.png",
+      {
+        health : 100
+      }
     )
   )
 }
@@ -121,8 +128,19 @@ var update = function(){
   Nakama.enemy.forEach(function (enemy){
       enemy.update();
   });
+
+  Nakama.game.physics.arcade.overlap(
+    Nakama.bulletGroup,
+    Nakama.enemyGroup,
+    onBulletHitEnemy
+  );
+
 }
 
+var onBulletHitEnemy = function (bulletSprite, enemySprite){
+  enemySprite.damage(1);
+  bulletSprite.kill();
+}
 
 // before camera render (mostly for debug)
 var render = function(){}
