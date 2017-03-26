@@ -1,23 +1,18 @@
 class EnemyController{
   constructor(x, y, spriteName, configs){
     this.sprite = Nakama.enemyGroup.create(x, y, 'assets', spriteName);
-    Nakama.game.physics.arcade.enable(this.sprite);
+    this.sprite.body.collideWorldBounds = true;
     this.configs = configs;
     this.sprite.health = this.configs.health;
-    this.sprite.collideWorldBounds = true;
-    this.sprite.body.velocity.x = -EnemyController.ENEMY_SPEED;
+    this.sprite.body.velocity.x = this.configs.speed;
   }
 
-
   update(){
-
-    if (this.sprite.position.x >= 560) {
-      this.sprite.body.velocity.x = -EnemyController.ENEMY_SPEED;
+    if(this.sprite.body.blocked.left){
+      this.sprite.body.velocity.x = this.configs.speed;
     }
-
-    if (this.sprite.position.x <= 0) {
-      this.sprite.body.velocity.x = EnemyController.ENEMY_SPEED;
+    else if(this.sprite.body.blocked.right){
+      this.sprite.body.velocity.x = -this.configs.speed;
     }
   }
 }
-EnemyController.ENEMY_SPEED = 300;
